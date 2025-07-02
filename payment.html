@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f0f2f5;
+        }
+        .bank-card {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .bank-card.selected {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            background-color: #eff6ff;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Select Your Bank</h2>
+
+        <div id="messageBox" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 hidden" role="alert">
+            <strong class="font-bold">Error:</strong>
+            <span class="block sm:inline" id="messageText"></span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.classList.add('hidden')">
+                <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+            </span>
+        </div>
+
+        <section id="bank-selection" class="mb-8">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div class="bank-card p-4 border border-gray-300 rounded-lg text-center hover:border-blue-500" data-bank="Maybank">
+                    <img src="images2/maybank.jpg" alt="Maybank" class="mx-auto mb-2 w-12 h-12 object-contain">
+                    <p class="text-sm font-medium text-gray-700">Maybank</p>
+                </div>
+                <div class="bank-card p-4 border border-gray-300 rounded-lg text-center hover:border-blue-500" data-bank="CIMB">
+                    <img src="images2/cimb.jpg" alt="CIMB" class="mx-auto mb-2 w-12 h-12 object-contain">
+                    <p class="text-sm font-medium text-gray-700">CIMB Bank</p>
+                </div>
+                <div class="bank-card p-4 border border-gray-300 rounded-lg text-center hover:border-blue-500" data-bank="Bank Islam">
+                    <img src="images2/bi.jpg" alt="Bank Islam" class="mx-auto mb-2 w-12 h-12 object-contain">
+                    <p class="text-sm font-medium text-gray-700">Bank Islam</p>
+                </div>
+                <div class="bank-card p-4 border border-gray-300 rounded-lg text-center hover:border-blue-500" data-bank="RHB Bank">
+                    <img src="images2/rhb.jpg" alt="RHB" class="mx-auto mb-2 w-12 h-12 object-contain">
+                    <p class="text-sm font-medium text-gray-700">RHB Bank</p>
+                </div>
+                <div class="bank-card p-4 border border-gray-300 rounded-lg text-center hover:border-blue-500" data-bank="Ambank">
+                    <img src="images2/ab.jpg" alt="Ambank" class="mx-auto mb-2 w-12 h-12 object-contain">
+                    <p class="text-sm font-medium text-gray-700">Ambank</p>
+                </div>
+                <div class="bank-card p-4 border border-gray-300 rounded-lg text-center hover:border-blue-500" data-bank="BSN">
+                    <img src="images2/bsn.jpg" alt="BSN" class="mx-auto mb-2 w-12 h-12 object-contain">
+                    <p class="text-sm font-medium text-gray-700">BSN</p>
+                </div>
+                <div class="bank-card p-4 border border-gray-300 rounded-lg text-center hover:border-blue-500" data-bank="HSBC">
+                    <img src="images2/hsbc.jpg" alt="HSBC" class="mx-auto mb-2 w-12 h-12 object-contain">
+                    <p class="text-sm font-medium text-gray-700">HSBC</p>
+                </div>
+                <div class="bank-card p-4 border border-gray-300 rounded-lg text-center hover:border-blue-500" data-bank="Bank Rakyat">
+                    <img src="images2/br.jpg" alt="Bank Rakyat" class="mx-auto mb-2 w-12 h-12 object-contain">
+                    <p class="text-sm font-medium text-gray-700">Bank Rakyat</p>
+                </div>
+            </div>
+            <button id="nextBtn" class="mt-6 w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-150" disabled>
+                Next
+            </button>
+        </section>
+
+        <section id="fpx-payment" class="hidden">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center" id="fpx-bank-name"></h3>
+
+            <div class="mb-4">
+                <label for="fpx-username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+                <input type="text" id="fpx-username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Bank Username">
+                <p id="username-error" class="text-red-500 text-xs italic hidden">Username is required.</p>
+            </div>
+
+            <div class="mb-6">
+                <label for="fpx-password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                <input type="password" id="fpx-password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Bank Password">
+                <p id="password-error" class="text-red-500 text-xs italic hidden">Password is required.</p>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button id="payBtn" class="bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition ease-in-out duration-150">
+                    Pay Now
+                </button>
+                <button id="cancelBtn" class="bg-gray-400 text-gray-800 py-3 px-4 rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50 transition ease-in-out duration-150">
+                    Cancel
+                </button>
+            </div>
+        </section>
+
+        <section id="payment-confirmation" class="hidden text-center py-10">
+            <i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i>
+            <h3 class="text-3xl font-bold text-gray-800 mb-3">Payment Successful!</h3>
+            <p class="text-gray-600 text-lg mb-4">Thank you for your purchase.</p>
+            <p class="text-gray-600 text-base">A confirmation email has been sent to your email and ours <span class="font-semibold text-blue-600" id="notification-email"></span>.</p>
+            <button onclick="window.location.href='index.html'" class="mt-8 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition ease-in-out duration-150">
+                Back to Homepage
+            </button>
+        </section>
+    </div>
+
+    <script>
+        const bankCards = document.querySelectorAll('.bank-card');
+        const nextBtn = document.getElementById('nextBtn');
+        const fpxPaymentSection = document.getElementById('fpx-payment');
+        const bankSelectionSection = document.getElementById('bank-selection');
+        const fpxBankName = document.getElementById('fpx-bank-name');
+        const payBtn = document.getElementById('payBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
+        const fpxUsernameInput = document.getElementById('fpx-username');
+        const fpxPasswordInput = document.getElementById('fpx-password');
+        const usernameError = document.getElementById('username-error');
+        const passwordError = document.getElementById('password-error');
+        const paymentConfirmationSection = document.getElementById('payment-confirmation');
+        const notificationEmailSpan = document.getElementById('notification-email');
+
+        let selectedBank = null;
+
+        bankCards.forEach(card => {
+            card.addEventListener('click', () => {
+                bankCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedBank = card.dataset.bank;
+                nextBtn.disabled = false;
+            });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (selectedBank) {
+                bankSelectionSection.classList.add('hidden');
+                fpxPaymentSection.classList.remove('hidden');
+                fpxBankName.textContent = `Pay with ${selectedBank.charAt(0).toUpperCase() + selectedBank.slice(1)} FPX`;
+            } else {
+                showMessageBox('Please select a bank to proceed.');
+            }
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            fpxPaymentSection.classList.add('hidden');
+            bankSelectionSection.classList.remove('hidden');
+            // Clear inputs and errors
+            fpxUsernameInput.value = '';
+            fpxPasswordInput.value = '';
+            usernameError.classList.add('hidden');
+            passwordError.classList.add('hidden');
+            hideMessageBox();
+        });
+
+        payBtn.addEventListener('click', () => {
+            hideMessageBox(); // Hide previous messages
+
+            const username = fpxUsernameInput.value.trim();
+            const password = fpxPasswordInput.value.trim();
+            let isValid = true;
+
+            if (username === '') {
+                usernameError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                usernameError.classList.add('hidden');
+            }
+
+            if (password === '') {
+                passwordError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                passwordError.classList.add('hidden');
+            }
+
+            if (isValid) {
+                showMessageBox('Processing your payment...', 'bg-blue-100 border-blue-400 text-blue-700');
+                // Simulate payment processing
+                setTimeout(() => {
+                    hideMessageBox(); // Hide "processing" message
+                    fpxPaymentSection.classList.add('hidden');
+                    paymentConfirmationSection.classList.remove('hidden');
+                    // For demonstration, use a dummy email or the entered username if it looks like an email
+                    const email = username.includes('@') ? username : 'cozyoclothing@gmail.com';
+                    notificationEmailSpan.textContent = email;
+
+                    // IMPORTANT: In a real application, the email notification to cozyoclothing@gmail.com
+                    // would be handled by a secure backend server integrated with the payment gateway.
+                    // This client-side code only simulates the display of the message.
+                    // Example (conceptual, not runnable here):
+                    // fetch('/api/send-payment-notification', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({
+                    //         customerEmail: email,
+                    //         merchantEmail: 'cozyoclothing@gmail.com',
+                    //         transactionDetails: { /* ... */ }
+                    //     })
+                    // }).then(response => response.json()).then(data => console.log(data));
+
+                }, 2000); // Simulate a 2-second processing time
+            } else {
+                showMessageBox('Please correct the errors in the form.');
+            }
+        });
+
+        function showMessageBox(message, typeClass = 'bg-red-100 border-red-400 text-red-700') {
+            messageBox.className = `bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4`; // Reset to default error first
+            messageBox.classList.add(...typeClass.split(' ')); // Add custom classes
+            messageText.textContent = message;
+            messageBox.classList.remove('hidden');
+        }
+
+        function hideMessageBox() {
+            messageBox.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

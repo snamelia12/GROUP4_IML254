@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Stories - COZYO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Fauna+One">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Cinzel', 'Fauna+One';
+      margin: 0;
+      background: #f4ebd3;
+    }
+
+    header h1 {
+      font-size: 64px;
+      text-align: center;
+      padding: 30px 0 10px;
+      color: #432820; /* Changed COZYO text color */
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #a8dadc;
+    }
+
+    nav {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background-color: #432820; /* Menu background color */
+    }
+
+    nav .nav-link {
+        color: white;
+	font-weight: bold;
+	font-size: 18px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #432820;
+      margin-top: 40px;
+    }
+
+    .gallery-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .responsive {
+      flex: 0 0 25%;
+      box-sizing: border-box;
+    }
+
+    .responsive:nth-child(4) {
+      flex: 0 0 25%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media only screen and (max-width: 700px) {
+      .responsive {
+        flex: 0 0 90%;
+      }
+    }
+
+    div.gallery {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    div.gallery:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      border-color: #0077b6;
+    }
+
+    div.gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    div.desc {
+      padding: 15px;
+      text-align: center;
+      background-color: #f1f1f1;
+      font-weight: 500;
+      color: #333;
+    }
+
+
+    .size-select {
+      margin-top: 10px;
+      width: 100px;
+      padding: 4px 6px;
+      font-size: 12px;
+    }
+
+    footer {
+      background-color: #432820; /* Changed footer background color */
+      color: white;
+    }
+
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer i {
+      margin-right: 8px;
+    }
+
+    footer .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .bg-custom-dark { /* Added custom class for navbar background */
+      background-color: #432820 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>COZYO</h1>
+  </header>
+
+  <nav class="navbar navbar-expand-sm bg-custom-dark navbar-dark"> <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="mainNavbar">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="story.html">Stories</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Categories</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="men.html">Men</a>
+              <a class="dropdown-item" href="women.html">Women</a>
+              <a class="dropdown-item" href="match.html">Match</a>
+              <a class="dropdown-item" href="kids.html">Kids</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Merchandise</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="tote.html">Totebag</a>
+              <a class="dropdown-item" href="lyd.html">Lanyard</a>
+              <a class="dropdown-item" href="tb.html">Tumbler</a>
+              <a class="dropdown-item" href="bh.html">Bucket Hat</a>
+              <a class="dropdown-item" href="cap.html">Cap</a>
+              <a class="dropdown-item" href="bean.html">Beanie</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="size.html">Sizing Chart</a></li>
+          <li class="nav-item"><a class="nav-link" href="locateus.html">Locate Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+        </ul>
+        <ul class="navbar-nav ml-3">
+            <li class="nav-item"><a id="cart-link" class="nav-link" href="cart6.html">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+            <li class="nav-item"><a class="btn btn-outline-light ml-2" href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container my-5" data-aos="fade-up">
+    <div class="row align-items-center">
+      <div class="col-md-6" style="text-align: justify;">
+        <h2>Stories</h2>
+        <p>
+          Behind every jersey we create, there’s a story, of passion, teamwork, and commitment. Our journey began with a simple goal to help teams represent themselves with pride and identity, both on and off the field.
+        </p>
+        <p>
+          From humble beginnings, we have grown into a brand trusted by teams across different sports and communities. Every jersey we produce carries not just a design, but a meaning, a story of unity, effort, and dedication.
+        </p>
+        <p>
+          In this section, we share the stories behind our brand, the creative process, and inspiring experiences from the teams and individuals who wear our jerseys with pride. Because to us, a jersey is more than just a uniform, it is a symbol of a journey.
+        </p>
+      </div>
+
+      <div class="col-md-6 text-center">
+        <img src="images2/sty1.jpg" alt="Story Image" class="img-fluid rounded">
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5" data-aos="fade-up">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center mb-3 mb-md-0">
+        <img src="images2/sty2.jpg" alt="Brand Image" class="img-fluid rounded">
+      </div>
+
+      <div class="col-md-6" style="text-align: justify;">
+        <h2>The Beginning of Our Brand</h2>
+        <p>We started this journey with one simple goal: to create jerseys that teams can wear with pride, comfort, and style. What began as a small passion project has grown into a trusted brand known for combining attractive designs with comfortable materials that players love.</p>
+
+        <h2>Our Creative Process</h2>
+        <p>Every jersey begins with your vision. We carefully design and craft each piece using high quality, breathable fabrics to ensure maximum comfort on and off the field. Our team focuses on every detail from fabric choice to print high quality to deliver jerseys that look great and feel even better.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5" data-aos="fade-up">
+    <div class="row align-items-center">
+      <div class="col-md-6" style="text-align: justify;">
+        <h2>Client Highlights</h2>
+        <p>
+          Our greatest pride comes from the teams who wear our jerseys with confidence. From local sports teams to corporate tournaments, we’ve had the privilege of working with passionate groups who play not just to win, but to represent something bigger like teamwork, loyalty, and dedication. Their stories inspire us to keep delivering our best.
+        </p>
+        <h2>Challenges We Have Overcome Brand</h2>
+        <p>
+          Like any journey, ours hasn’t been without challenges. From limited resources to improving our production process, we’ve faced setbacks that taught us valuable lessons. But with every challenge, we chose to grow, adapt, and improve. Today, every jersey we produce reflects that commitment to constant progress.
+        </p>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="images2/sty5.jpg" alt="Story Image" class="img-fluid rounded">
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5" data-aos="fade-up">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center mb-3 mb-md-0">
+        <img src="images2/sty4.jpg" alt="Brand Image" class="img-fluid rounded">
+      </div>
+
+      <div class="col-md-6" style="text-align: justify;">
+        <h2>Our Mission and Vission</h2>
+        <p>Our mission is clear: to deliver high quality custom jerseys that bring pride to every team. We believe a jersey is not just a uniform, but a statement of unity, ambition, and spirit. Looking ahead, we aim to expand our services, work with more communities, and continue building a brand that teams can rely on.
+        </p>
+
+        <h2>Behind the Scenes</h2>
+        <p>Behind every order is a hardworking team, passionate about what they do. From creative designers to skilled printers, everyone plays their part to ensure your jerseys are nothing short of excellent. We take pride in our process, and we believe that attention to detail makes all the difference.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5" data-aos="fade-up">
+    <div class="row align-items-center">
+      <div class="col-md-6" style="text-align: justify;">
+        <h2>Giving Back to The Community</h2>
+        <p>
+          We believe in growing together with our community. That’s why we actively support local teams, school tournaments, and community events whenever we can. It’s not just about business, it’s about giving opportunities, inspiring youth, and building stronger connections through sports.
+        </p>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="images2/sty3.jpg" alt="Story Image" class="img-fluid rounded">
+      </div>
+    </div>
+  </section>
+
+
+  <footer>
+    <div class="container py-4">
+      <div class="row">
+
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <p>Stay connected through our social platforms:</p>
+          <a href="https://www.facebook.com" class="text-white d-block"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="https://www.instagram.com/" class="text-white d-block"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://www.tiktok.com/en/" class="text-white d-block"><i class="fab fa-tiktok"></i> TikTok</a>
+          <a href="https://www.youtube.com/" class="text-white d-block"><i class="fab fa-youtube"></i> YouTube</a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Our Mission</h5>
+          <p>At COZYO, we aim to bring you comfort and style with every product. Our passion for cozy fashion drives our commitment to quality and creativity.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Customer Service</h5>
+          <p>Email: cozyoclothing@gmail.com</p>
+	  <p>Phone: +60 4-733 4567</p>
+	  <p>Fax: +60 4-733 7890</p>
+          <p><a href="#">FAQs</a> | <a href="#">Shipping Info</a> | <a href="#">Return Policy</a></p>
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <small>© 2025 COZYO. All rights reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800, // animation duration
+      once: true,    // whether animation should happen only once - while scrolling down
+    });
+
+    // Function to update cart count in the navbar
+    function updateCartCount() {
+        let cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+        const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cart-count').textContent = cartCount;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCartCount(); // Initial update of cart count
+    });
+  </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.cart-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productElement = event.target.closest('.gallery'); // Changed from .gallery-item to .gallery
+                if (productElement) {
+                    const productName = productElement.getAttribute('data-name');
+                    const productPrice = parseFloat(productElement.getAttribute('data-price').replace('RM', ''));
+
+                    // For merchandise, you might not have a size, or it could be 'One Size'
+                    const productSize = 'One Size'; // Default size for caps, or add a select if different sizes are available
+
+                    const item = {
+                        id: Date.now(), // Unique ID for the item
+                        name: productName,
+                        price: productPrice,
+                        quantity: 1,
+                        size: productSize
+                    };
+
+                    let cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+                    // Check if item already exists in cart (same name and size/type)
+                    // If a user can add the *exact same* cap multiple times, you might want to allow that.
+                    // For now, let's assume if it's the exact same product name and size, increment quantity.
+                    const existingItemIndex = cartItems.findIndex(cartItem =>
+                        cartItem.name === item.name && cartItem.size === item.size
+                    );
+
+                    if (existingItemIndex > -1) {
+                        cartItems[existingItemIndex].quantity += 1; // Increment quantity if item exists
+                    } else {
+                        cartItems.push(item); // Add new item if it doesn't exist
+                    }
+
+                    localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
+
+                    // Optional: Provide visual feedback that the item was added
+                    alert(`${productName} added to cart!`);
+
+                    // Optional: If you want to update the cart count in the header immediately
+                    updateCartCountDisplay(); // Call a function to refresh the cart count
+
+                    // No redirection here. User stays on the product page.
+                    // If you want to redirect after adding, uncomment the line below:
+                    // window.location.href = 'cart6.html';
+                }
+            });
+        });
+
+        // Function to update the cart count in the navbar (assuming cart-count span exists)
+        function updateCartCountDisplay() {
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                const cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+                const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+                cartCountElement.textContent = totalItems;
+            }
+        }
+
+        // Call this when the page loads to show the initial cart count
+        updateCartCountDisplay();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Fauna+One">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Custom styles for Inter font and general body */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Applying a subtle linear gradient for an "interesting" background */
+            background: linear-gradient(135deg, #f3f4f6 0%, #efe8e6 50%, #f3f4f6 100%); /* Fading in and out of a light shade of the requested color */
+            min-height: 100vh; /* Ensure gradient covers full height */
+            display: flex;
+            flex-direction: column; /* Allow vertical stacking of title and box */
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+        /* Custom modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+        }
+        /* Loading spinner */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #432820; /* Updated loader color */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* COZYO Title Styles */
+        .cozyo-title {
+            font-family: 'Cinzel', serif; /* Use a more decorative font */
+            font-size: 60px; /* Large font size */
+            color: #432820; /* Your requested color */
+            text-align: center;
+            /* font-style: italic; */ /* Removed italic style */
+            padding-bottom: 30px; /* Space below the title */
+            text-shadow: 2px 2px #5d3e33; /* Complementary text shadow */
+            margin-top: -80px; /* Adjust margin to center overall content better */
+            opacity: 0; /* Start invisible for animation */
+            transform: scale(0.9); /* Start slightly smaller for animation */
+            animation: fadeInScale 1.5s forwards ease-out; /* Animation */
+        }
+
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Input focus animation */
+        input:focus {
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+        }
+        input {
+            transition: all 0.3s ease-in-out; /* Smooth transition for focus effects */
+        }
+
+        /* Button hover animation */
+        button {
+            transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+        }
+        button:hover {
+            transform: translateY(-3px); /* More pronounced lift */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+        }
+    </style>
+</head>
+<body>
+    <h1 class="cozyo-title">COZYO</h1>
+
+    <div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-md" data-aos="fade-up">
+        <div class="flex justify-center mb-6">
+            <button id="show-login-btn" class="px-6 py-3 rounded-full font-semibold text-lg mr-4 bg-[#432820] text-white shadow-md hover:bg-[#301e17] focus:outline-none focus:ring-2 focus:ring-[#5d3e33] focus:ring-opacity-75">Login</button>
+            <button id="show-signup-btn" class="px-6 py-3 rounded-full font-semibold text-lg text-gray-700 bg-gray-200 shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75">Sign Up</button>
+        </div>
+
+        <div id="message-box" class="hidden mb-4 p-3 rounded-lg text-sm text-center" role="alert"></div>
+
+        <div id="login-form-container">
+            <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Login to your Account</h2>
+            <form id="login-form" class="space-y-5">
+                <div>
+                    <label for="login-email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
+                    <input type="email" id="login-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5d3e33] focus:border-[#432820] outline-none" placeholder="your@example.com" required>
+                </div>
+                <div>
+                    <label for="login-password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="login-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5d3e33] focus:border-[#432820] outline-none" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="w-full bg-[#432820] text-white py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-[#301e17] focus:outline-none focus:ring-2 focus:ring-[#5d3e33] focus:ring-opacity-75">Login</button>
+            </form>
+        </div>
+
+        <div id="signup-form-container" class="hidden">
+            <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Create a New Account</h2>
+            <form id="signup-form" class="space-y-5">
+                <div>
+                    <label for="signup-email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
+                    <input type="email" id="signup-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5d3e33] focus:border-[#432820] outline-none" placeholder="your@example.com" required>
+                </div>
+                <div>
+                    <label for="signup-password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="signup-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5d3e33] focus:border-[#432820] outline-none" placeholder="••••••••" required minlength="6">
+                    <p class="text-xs text-gray-500 mt-1">Password must be at least 6 characters long.</p>
+                </div>
+                <button type="submit" class="w-full bg-[#432820] text-white py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-[#301e17] focus:outline-none focus:ring-2 focus:ring-[#5d3e33] focus:ring-opacity-75">Sign Up</button>
+            </form>
+        </div>
+
+        <div id="auth-info" class="hidden mt-8 text-center p-6 bg-[#efe8e6] rounded-xl shadow-inner">
+            <h3 class="text-xl font-semibold text-[#432820] mb-4">Welcome!</h3>
+            <p class="text-gray-700 text-base mb-2">You are logged in as:</p>
+            <p id="user-id-display" class="text-lg font-mono text-[#5d3e33] bg-[#e6dedb] p-3 rounded-md break-all"></p>
+            <button id="logout-btn" class="mt-6 bg-red-600 text-white py-2 px-6 rounded-lg font-semibold shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">Logout</button>
+            <button id="go-home-btn" class="mt-4 bg-gray-500 text-white py-2 px-6 rounded-lg font-semibold shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75">Go to Home</button>
+        </div>
+    </div>
+
+    <div id="custom-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <p id="modal-message" class="text-gray-800 text-lg mb-6"></p>
+            <button id="modal-close-btn" class="bg-[#432820] text-white py-2 px-6 rounded-lg font-semibold hover:bg-[#301e17]">OK</button>
+        </div>
+    </div>
+
+    <div id="loading-overlay" class="modal-overlay hidden">
+        <div class="loader"></div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // DOM Elements
+        const loginFormContainer = document.getElementById('login-form-container');
+        const signupFormContainer = document.getElementById('signup-form-container');
+        const showLoginBtn = document.getElementById('show-login-btn');
+        const showSignupBtn = document.getElementById('show-signup-btn');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const loginEmailInput = document.getElementById('login-email');
+        const loginPasswordInput = document.getElementById('login-password');
+        const signupEmailInput = document.getElementById('signup-email');
+        const signupPasswordInput = document.getElementById('signup-password');
+        const authInfoDiv = document.getElementById('auth-info');
+        const userIdDisplay = document.getElementById('user-id-display');
+        const logoutBtn = document.getElementById('logout-btn');
+        const goHomeBtn = document.getElementById('go-home-btn');
+        const messageBox = document.getElementById('message-box');
+        const customModal = document.getElementById('custom-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        let currentUserId = null; // To store the current user's ID
+
+        /**
+         * Simulates a unique ID generation.
+         * @returns {string} A simple unique ID.
+         */
+        function generateUniqueId() {
+            return 'user_' + Date.now().toString(36) + Math.random().toString(36).substring(2);
+        }
+
+        /**
+         * Displays a custom modal with a given message.
+         * @param {string} message - The message to display in the modal.
+         */
+        function showCustomModal(message) {
+            modalMessage.textContent = message;
+            customModal.classList.remove('hidden');
+        }
+
+        /**
+         * Hides the custom modal.
+         */
+        function hideCustomModal() {
+            customModal.classList.add('hidden');
+        }
+
+        /**
+         * Displays a message in the message box below the toggle buttons.
+         * @param {string} message - The message to display.
+         * @param {string} type - The type of message ('success', 'error', 'info').
+         */
+        function displayMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700', 'bg-blue-100', 'text-blue-700', 'bg-[#efe8e6]', 'text-[#432820]');
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-700');
+            } else if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-700');
+            } else { // 'info' or default
+                messageBox.classList.add('bg-[#e6dedb]', 'text-[#432820]');
+            }
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        /**
+         * Shows the loading overlay.
+         */
+        function showLoading() {
+            loadingOverlay.classList.remove('hidden');
+        }
+
+        /**
+         * Hides the loading overlay.
+         */
+        function hideLoading() {
+            loadingOverlay.classList.add('hidden');
+        }
+
+        /**
+         * Toggles the visibility of login and signup forms.
+         * @param {string} formToShow - 'login' or 'signup'.
+         */
+        function toggleForms(formToShow) {
+            if (formToShow === 'login') {
+                loginFormContainer.classList.remove('hidden');
+                signupFormContainer.classList.add('hidden');
+                showLoginBtn.classList.add('bg-[#432820]', 'text-white');
+                showLoginBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                showSignupBtn.classList.add('bg-gray-200', 'text-gray-700');
+                showSignupBtn.classList.remove('bg-[#432820]', 'text-white');
+            } else {
+                loginFormContainer.classList.add('hidden');
+                signupFormContainer.classList.remove('hidden');
+                showLoginBtn.classList.add('bg-gray-200', 'text-gray-700');
+                showLoginBtn.classList.remove('bg-[#432820]', 'text-white');
+                showSignupBtn.classList.add('bg-[#432820]', 'text-white');
+                showSignupBtn.classList.remove('bg-gray-200', 'text-gray-700');
+            }
+            messageBox.classList.add('hidden'); // Clear messages on form switch
+        }
+
+        // Event Listeners for form toggling
+        showLoginBtn.addEventListener('click', () => toggleForms('login'));
+        showSignupBtn.addEventListener('click', () => toggleForms('signup'));
+        modalCloseBtn.addEventListener('click', hideCustomModal);
+        goHomeBtn.addEventListener('click', () => {
+            window.location.href = './index.html'; // Navigate back to the home page
+        });
+
+        /**
+         * Simulates user signup by storing credentials in localStorage.
+         * @param {Event} e - The form submission event.
+         */
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = signupEmailInput.value;
+            const password = signupPasswordInput.value;
+
+            if (password.length < 6) {
+                displayMessage("Password must be at least 6 characters long.", "error");
+                return;
+            }
+
+            showLoading();
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            try {
+                let users = JSON.parse(localStorage.getItem('users')) || {};
+
+                if (users[email]) {
+                    displayMessage("This email is already registered. Please try logging in.", "error");
+                } else {
+                    const userId = generateUniqueId();
+                    users[email] = { password: password, uid: userId }; // In a real app, hash password!
+                    localStorage.setItem('users', JSON.stringify(users));
+                    localStorage.setItem('loggedInUser', JSON.stringify({ email: email, uid: userId })); // Auto-login after signup
+                    displayMessage("Account created successfully and you are logged in! Redirecting...", "success");
+                    checkAuthState(); // Update UI
+                    setTimeout(() => { window.location.href = './index.html'; }, 2000); // Redirect after message
+                }
+            } catch (error) {
+                console.error("Sign up error:", error);
+                displayMessage("Failed to create account. Please try again.", "error");
+            } finally {
+                hideLoading();
+            }
+        });
+
+        /**
+         * Simulates user login by validating credentials from localStorage.
+         * @param {Event} e - The form submission event.
+         */
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = loginEmailInput.value;
+            const password = loginPasswordInput.value;
+
+            showLoading();
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            try {
+                let users = JSON.parse(localStorage.getItem('users')) || {};
+
+                if (users[email] && users[email].password === password) { // In a real app, compare hashed passwords!
+                    localStorage.setItem('loggedInUser', JSON.stringify({ email: email, uid: users[email].uid }));
+                    displayMessage("Logged in successfully! Redirecting...", "success");
+                    checkAuthState(); // Update UI
+                    setTimeout(() => { window.location.href = 'index.html'; }, 2000); // Redirect after message
+                } else {
+                    displayMessage("Invalid email or password.", "error");
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                displayMessage("Failed to log in. Please try again.", "error");
+            } finally {
+                hideLoading();
+            }
+        });
+
+        /**
+         * Handles user logout by clearing session from localStorage.
+         */
+        logoutBtn.addEventListener('click', async () => {
+            showLoading();
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            try {
+                localStorage.removeItem('loggedInUser');
+                displayMessage("Logged out successfully.", "info");
+                checkAuthState(); // Update UI
+                // After logout, typically redirect back to login page
+                setTimeout(() => { window.location.href = './login.html'; }, 1000);
+            } catch (error) {
+                console.error("Logout error:", error);
+                displayMessage("Failed to log out. Please try again.", "error");
+            } finally {
+                hideLoading();
+            }
+        });
+
+        /**
+         * Checks the simulated authentication state and updates the UI.
+         */
+        function checkAuthState() {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+            if (loggedInUser && loggedInUser.uid) {
+                // User is signed in.
+                currentUserId = loggedInUser.uid;
+                userIdDisplay.textContent = loggedInUser.uid;
+                authInfoDiv.classList.remove('hidden');
+                loginFormContainer.classList.add('hidden');
+                signupFormContainer.classList.add('hidden');
+                showLoginBtn.classList.add('hidden');
+                showSignupBtn.classList.add('hidden');
+                messageBox.classList.add('hidden'); // Hide any previous messages
+            } else {
+                // User is signed out.
+                currentUserId = null;
+                authInfoDiv.classList.add('hidden');
+                loginFormContainer.classList.remove('hidden');
+                signupFormContainer.classList.add('hidden'); // Default to login view
+                showLoginBtn.classList.remove('hidden');
+                showSignupBtn.classList.remove('hidden');
+                toggleForms('login'); // Ensure login form is visible
+            }
+        }
+
+        // Initialize AOS when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 800, // animation duration
+                once: true,    // whether animation should happen only once - while scrolling down
+            });
+        });
+
+        // Initial check on load
+        checkAuthState();
+    </script>
+</body>
+</html>

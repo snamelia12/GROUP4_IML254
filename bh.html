@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Merchandise - Bucket Hat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Fauna+One">
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- FontAwesome CDN for icons -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: 'Cinzel', 'Fauna+One';
+      margin: 0;
+      background: #f4ebd3;
+    }
+
+     header h1 {
+      font-size: 64px;
+      text-align: center;
+      padding: 30px 0 10px;
+      color: #432820; /* Changed COZYO text color */
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #a8dadc;
+    }
+
+    nav.navbar {
+      background-color: #432820 !important; /* Changed navbar background */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav .nav-link {
+        color: white; 
+	font-weight: bold;
+	font-size: 18px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #432820;
+      margin-top: 40px;
+     font-weight: bold;
+    }
+
+    .gallery-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px; /* space between frames */
+      padding: 20px;
+    }
+
+    .responsive {
+      flex: 0 0 20%; /* about 8 per row */
+      box-sizing: border-box;
+    }
+
+    @media only screen and (max-width: 700px) {
+      .responsive {
+        flex: 0 0 90%;
+      }
+    }
+
+    div.gallery {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    div.gallery:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      border-color: #0077b6;
+    }
+
+    div.gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    div.desc {
+      padding: 15px;
+      text-align: center;
+      background-color: #f1f1f1;
+      font-weight: 500;
+      color: #333;
+    }
+.cart-button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #03045e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .cart-button:hover {
+      background-color: #0077b6;
+    }
+
+    .size-select {
+      margin-top: 10px;
+      width: 100px;
+      padding: 4px 6px;
+      font-size: 12px;
+    }
+
+    /* Modal custom styles */
+    .modal-header {
+      background-color: #03045e;
+      color: white;
+    }
+    .modal-footer button {
+      background-color: #03045e;
+      color: white;
+      border: none;
+    }
+    .modal-footer button:hover {
+      background-color: #0077b6;
+    }
+
+    /* Cart item style */
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+    }
+    .cart-item-name {
+      font-weight: 600;
+      color: #03045e;
+      flex: 1 1 60%;
+    }
+    .cart-item-details {
+      flex: 1 1 40%;
+      text-align: right;
+      font-size: 14px;
+      color: #555;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>COZYO</h1>
+  </header>
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#mainNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="mainNavbar">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="story.html">Stories</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Categories</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="men.html">Men</a>
+              <a class="dropdown-item" href="women.html">Women</a>
+              <a class="dropdown-item" href="match.html">Match</a>
+              <a class="dropdown-item" href="kids.html">Kids</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Merchandise</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="tote.html">Totebag</a>
+              <a class="dropdown-item" href="lyd.html">Lanyard</a>
+              <a class="dropdown-item" href="tb.html">Tumbler</a>
+              <a class="dropdown-item" href="bh.html">Bucket Hat</a>
+              <a class="dropdown-item" href="cap.html">Cap</a>
+              <a class="dropdown-item" href="bean.html">Beanie</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="size.html">Sizing Chart</a></li>
+          <li class="nav-item"><a class="nav-link" href="locateus.html">Locate Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+        </ul>
+        <ul class="navbar-nav ml-3">
+          <li class="nav-item">
+  <a id="cart-link" class="nav-link" href="cart6.html"
+    >🛒 Cart (<span id="cart-count">0</span>)</a
+  >
+	  </li>
+          <li class="nav-item"><a class="btn btn-outline-light ml-2" href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <h2>BUCKET HAT</h2>
+
+  <div class="gallery-container">
+    <!-- Frame 1 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Enjoy Litte Things" data-price="RM13.00">
+        <img src="images/bh1.jpg" alt="Product 1" />
+        <div class="desc">
+          Enjoy Little Things <br> 
+	  RM13.00 <br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 2 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Cozy Brew" data-price="RM13.00 ">
+        <img src="images/bh2.jpg" alt="Product 2" />
+        <div class="desc">
+          Cozy Brew <br> 
+	  RM13.00  <br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 3 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Perfecto" data-price="RM13.00">
+        <img src="images/bh3.jpg" alt="Product 3" />
+        <div class="desc">
+          Perfecto <br> 
+	  RM13.00 <br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 4 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Sunrise" data-price="RM13.00">
+        <img src="images/bh4.jpg" alt="Product 4" />
+        <div class="desc">
+          Sunrise <br> 
+	  RM13.00<br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 5 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Morning Recharge" data-price="RM13.00">
+        <img src="images/bh5.jpg" alt="Product 5" />
+        <div class="desc">
+          Morning Recharge <br> 
+	  RM13.00 <br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 6 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Escape&Enjoy" data-price="RM13.00">
+        <img src="images/bh6.jpg" alt="Product 6" />
+        <div class="desc">
+          Escape&Enjoy <br> 
+	  RM13.00 <br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 7 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Positive Vibes" data-price="RM13.00">
+        <img src="images/bh7.jpg" alt="Product 7" />
+        <div class="desc">
+          Positive Vibes <br> 
+	  RM13.00 <br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 8 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Nature Enthusiast" data-price="RM13.00">
+        <img src="images/bh8.jpg" alt="Product 8" />
+        <div class="desc">
+          Nature Enthusiast<br> 
+	  RM13.00 <br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 9 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Blush Beauty" data-price="RM13.00">
+        <img src="images/bh9.jpg" alt="Product 9" />
+        <div class="desc">
+          Blush Beauty <br> 
+	  RM13.00<br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 10 -->
+    <div class="responsive">
+      <div class="gallery" data-name="Unity&Treats" data-price="RM13.00">
+        <img src="images/bh10.jpg" alt="Product 10" />
+        <div class="desc">
+          Unity&Treats <br> 
+	  RM13.00 <br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cart = [];
+    const cartCount = document.getElementById('cart-count');
+    const cartItemsDiv = document.getElementById('cart-items');
+    const orderForm = document.getElementById('order-form');
+    const placeOrderBtn = document.getElementById('place-order-btn');
+
+    const onlineBankingDetails = document.getElementById('online-banking-details');
+    const bankNameInput = document.getElementById('bank-name');
+    const accountNumberInput = document.getElementById('account-number');
+    const accountNameInput = document.getElementById('account-name');
+
+    function updateCartCount() {
+      cartCount.textContent = cart.length;
+    }
+
+    function renderCart() {
+      cartItemsDiv.innerHTML = '';
+      if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+        return;
+      }
+      cart.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.classList.add('cart-item');
+        div.innerHTML = `
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-details">
+            $${item.price.toFixed(2)} <button data-index="${index}" class="btn btn-sm btn-danger remove-btn">Remove</button>
+          </div>
+        `;
+        cartItemsDiv.appendChild(div);
+      });
+
+      document.querySelectorAll('.remove-btn').forEach(button => {
+        button.addEventListener('click', e => {
+          const idx = parseInt(e.target.getAttribute('data-index'));
+          cart.splice(idx, 1);
+          updateCartCount();
+          renderCart();
+          checkFormValidity();
+        });
+      });
+    }
+
+    document.querySelectorAll('.cart-button').forEach(button => {
+      button.addEventListener('click', e => {
+        const productDiv = e.target.closest('.gallery');
+        const name = productDiv.getAttribute('data-name');
+        const price = parseFloat(productDiv.getAttribute('data-price'));
+
+        cart.push({ name, price });
+        updateCartCount();
+        renderCart();
+        checkFormValidity();
+      });
+    });
+
+    function setOnlineBankingInputsEnabled(enabled) {
+      onlineBankingDetails.style.display = enabled ? 'block' : 'none';
+
+      [bankNameInput, accountNumberInput, accountNameInput].forEach(input => {
+        input.disabled = !enabled;
+        if (enabled) {
+          input.setAttribute('required', '');
+        } else {
+          input.removeAttribute('required');
+          input.value = '';
+        }
+      });
+    }
+
+    function checkFormValidity() {
+      const nameValid = orderForm['customer-name'].checkValidity();
+      const emailValid = orderForm['customer-email'].checkValidity();
+      const phoneValid = orderForm['customer-phone'].checkValidity();
+      const addressValid = orderForm['customer-address'].checkValidity();
+      const paymentMethod = orderForm['payment'].value;
+
+      let onlineBankingValid = true;
+      if (paymentMethod === 'online-banking') {
+        onlineBankingValid =
+          bankNameInput.checkValidity() &&
+          accountNumberInput.checkValidity() &&
+          accountNameInput.checkValidity();
+      }
+
+      setOnlineBankingInputsEnabled(paymentMethod === 'online-banking');
+
+      placeOrderBtn.disabled = !(
+        nameValid &&
+        emailValid &&
+        phoneValid &&
+        addressValid &&
+        paymentMethod !== '' &&
+        onlineBankingValid &&
+        cart.length > 0
+      );
+    }
+
+    orderForm.addEventListener('input', checkFormValidity);
+    document.querySelectorAll('input[name="payment"]').forEach(radio => {
+      radio.addEventListener('change', checkFormValidity);
+    });
+
+    orderForm.addEventListener('submit', e => {
+      e.preventDefault();
+
+      if (orderForm['payment'].value === '') {
+        alert('Please select a payment method.');
+        return;
+      }
+
+      alert('Thank you for your order!');
+
+      cart.length = 0;
+      updateCartCount();
+      renderCart();
+
+      orderForm.reset();
+      placeOrderBtn.disabled = true;
+      setOnlineBankingInputsEnabled(false);
+
+      $('#cartModal').modal('hide');
+    });
+
+    renderCart();
+    updateCartCount();
+    setOnlineBankingInputsEnabled(false);
+  </script>
+
+<style>
+    footer {
+      background-color: #432820;
+      color: white;
+    }
+
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer i {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+
+<body>
+   <!-- Footer -->
+  <footer class="mt-5 pt-4 pb-4">
+    <div class="container">
+      <div class="row">
+
+        <!-- Follow Us -->
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <p>Stay connected through our social platforms:</p>
+          <a href="https://www.facebook.com" class="text-white d-block"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="https://www.instagram.com/" class="text-white d-block"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://www.tiktok.com/en/" class="text-white d-block"><i class="fab fa-tiktok"></i> TikTok</a>
+          <a href="https://www.youtube.com/" class="text-white d-block"><i class="fab fa-youtube"></i> YouTube</a>
+        </div>
+
+        <!-- Our Mission -->
+        <div class="col-md-4 mb-4">
+          <h5>Our Mission</h5>
+          <p>At COZYO, we aim to bring you comfort and style with every product. Our passion for cozy fashion drives our commitment to quality and creativity.</p>
+        </div>
+
+        <!-- Customer Service -->
+        <div class="col-md-4 mb-4">
+          <h5>Customer Service</h5>
+           <p>Email: cozyoclothing@gmail.com</p>
+	  <p>Phone: +60 4-733 4567</p>
+	  <p>Fax: +60 4-733 7890</p>
+          <p><a href="#">FAQs</a> | <a href="#">Shipping Info</a> | <a href="#">Return Policy</a></p>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        <small>&copy; 2025 COZYO. All rights reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.cart-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productElement = event.target.closest('.gallery-item');
+                if (productElement) {
+                    const productName = productElement.querySelector('.desc h4').textContent.trim();
+                    const productPriceText = productElement.querySelector('.desc p').textContent.trim();
+                    const productPrice = parseFloat(productPriceText.replace('RM ', ''));
+
+                    // For simplicity, assigning a default size. You might need to add a size selection in your HTML.
+                    const productSize = 'M'; // Default size
+
+                    const item = {
+                        id: Date.now(), // Unique ID for the item
+                        name: productName,
+                        price: productPrice,
+                        quantity: 1,
+                        size: productSize
+                    };
+
+                    let cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+                    // Check if item already exists in cart (same name and size)
+                    const existingItem = cartItems.find(cartItem => cartItem.name === item.name && cartItem.size === item.size);
+
+                    if (existingItem) {
+                        existingItem.quantity += 1; // Increment quantity if item exists
+                    } else {
+                        cartItems.push(item); // Add new item if it doesn't exist
+                    }
+
+                    localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
+
+                    // Redirect to the new cart page
+                    window.location.href = 'cart6.html';
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.cart-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productElement = event.target.closest('.gallery'); // Changed from .gallery-item to .gallery
+                if (productElement) {
+                    const productName = productElement.getAttribute('data-name');
+                    const productPrice = parseFloat(productElement.getAttribute('data-price').replace('RM', ''));
+
+                    // For merchandise, you might not have a size, or it could be 'One Size'
+                    const productSize = 'One Size'; // Default size for caps, or add a select if different sizes are available
+
+                    const item = {
+                        id: Date.now(), // Unique ID for the item
+                        name: productName,
+                        price: productPrice,
+                        quantity: 1,
+                        size: productSize
+                    };
+
+                    let cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+                    // Check if item already exists in cart (same name and size/type)
+                    // If a user can add the *exact same* cap multiple times, you might want to allow that.
+                    // For now, let's assume if it's the exact same product name and size, increment quantity.
+                    const existingItemIndex = cartItems.findIndex(cartItem =>
+                        cartItem.name === item.name && cartItem.size === item.size
+                    );
+
+                    if (existingItemIndex > -1) {
+                        cartItems[existingItemIndex].quantity += 1; // Increment quantity if item exists
+                    } else {
+                        cartItems.push(item); // Add new item if it doesn't exist
+                    }
+
+                    localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
+
+                    // Optional: Provide visual feedback that the item was added
+                    alert(`${productName} added to cart!`);
+
+                    // Optional: If you want to update the cart count in the header immediately
+                    updateCartCountDisplay(); // Call a function to refresh the cart count
+
+                    // No redirection here. User stays on the product page.
+                    // If you want to redirect after adding, uncomment the line below:
+                    // window.location.href = 'cart6.html';
+                }
+            });
+        });
+
+        // Function to update the cart count in the navbar (assuming cart-count span exists)
+        function updateCartCountDisplay() {
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                const cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+                const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+                cartCountElement.textContent = totalItems;
+            }
+        }
+
+        // Call this when the page loads to show the initial cart count
+        updateCartCountDisplay();
+    });
+</script>
+</body>
+</html>

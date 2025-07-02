@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Locate Us - COZYO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Fauna+One">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+  <style>
+    body {
+      font-family: 'Cinzel', 'Fauna+One';
+      margin: 0;
+      background: #f4ebd3;
+    }
+
+     header h1 {
+      font-size: 64px;
+      text-align: center;
+      padding: 30px 0 10px;
+      color: #432820; /* Changed COZYO text color */
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #a8dadc;
+    }
+
+    nav.navbar {
+      background-color: #432820 !important; /* Changed navbar background */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav .nav-link {
+        color: white; 
+	font-weight: bold;
+	font-size: 18px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #432820;
+      margin-top: 40px;
+     font-weight: bold;
+    }
+
+    .gallery-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px; /* space between frames */
+      padding: 20px;
+    }
+
+    .responsive {
+      flex: 0 0 25%;  /* about 3 per row */
+      box-sizing: border-box;
+    }
+
+    /* Center the 4th frame on its own row */
+    .responsive:nth-child(4) {
+      flex: 0 0 25%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media only screen and (max-width: 700px) {
+      .responsive {
+        flex: 0 0 90%;
+      }
+    }
+
+    div.gallery {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    div.gallery:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      border-color: #0077b6;
+    }
+
+    div.gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    div.desc {
+      padding: 15px;
+      text-align: center;
+      background-color: #f1f1f1;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .cart-button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #03045e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .cart-button:hover {
+      background-color: #0077b6;
+    }
+
+    .size-select {
+      margin-top: 10px;
+      width: 100px;
+      padding: 4px 6px;
+      font-size: 12px;
+    }
+
+    /* CSS from others.html for Locate Us sections */
+    .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+    }
+
+    /* Hero Section */
+    .hero {
+        background: #deaa88 url('https://via.placeholder.com/1500x400/000000/FFFFFF?text=Locate+Us+Banner') no-repeat center center/cover;
+        color: #fff;
+        text-align: center;
+        padding: 60px 0;
+        margin-bottom: 20px;
+    }
+
+    .hero h2 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    /* General Section Styling */
+    section {
+        padding: 40px 0;
+        margin-bottom: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    section h3 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+        color: #333;
+    }
+
+    /* Contact Info Section */
+    #contact-info .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 20px;
+        text-align: center;
+    }
+
+    #contact-info .info-item {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    #contact-info .info-item i {
+        font-size: 3rem;
+        color: #77aaff;
+        margin-bottom: 10px;
+    }
+
+    #contact-info .info-item h4 {
+        font-size: 1.5rem;
+        margin-bottom: 7px;
+        color: #555;
+    }
+
+    #contact-info .info-item p {
+        font-size: 0.75rem;
+        color: #666;
+    }
+
+    #contact-info .info-item a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    #contact-info .info-item a:hover {
+        text-decoration: underline;
+    }
+
+    /* Map Section */
+    #map-section .map-embed {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        overflow: hidden;
+        background-color: #eee;
+        border-radius: 8px;
+    }
+    #map-section .map-embed iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: 8px;
+    }
+
+    #map-section .map-instructions {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e9f7ff;
+        border-left: 5px solid #77aaff;
+        border-radius: 5px;
+        color: #333;
+    }
+
+    #map-section .map-instructions ol {
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    #map-section .map-instructions li {
+        margin-bottom: 5px;
+    }
+
+    #map-section .map-instructions a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    #map-section .map-instructions a:hover {
+        text-decoration: underline;
+    }
+
+    .form-note {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: #777;
+        background-color: #fff3cd;
+        border-left: 5px solid #ffc107;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    footer {
+      background-color: #432820;
+      color: white;
+    }
+
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer i {
+      margin-right: 8px;
+    }
+
+    @media (max-width: 768px) {
+        header .container {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        header nav ul {
+            margin-top: 15px;
+        }
+
+        header nav ul li {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+        }
+
+        #contact-info .info-grid {
+            grid-template-columns: 1fr; 
+        }
+
+        .map-embed {
+            padding-bottom: 75%; 
+        }
+
+        .contact-form {
+            padding: 20px;
+        }
+    }
+    @media (max-width: 480px) {
+        .container {
+            width: 95%;
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+        }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>COZYO</h1>
+  </header>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="mainNavbar">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="story.html">Stories</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Categories</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="men.html">Men</a>
+              <a class="dropdown-item" href="women.html">Women</a>
+              <a class="dropdown-item" href="match.html">Match</a>
+              <a class="dropdown-item" href="#">Kids</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Merchandise</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="tote.html">Totebag</a>
+              <a class="dropdown-item" href="lyd.html">Lanyard</a>
+              <a class="dropdown-item" href="#">Tumbler</a>
+              <a class="dropdown-item" href="#">Bucket Hat</a>
+              <a class="dropdown-item" href="#">Cap</a>
+              <a class="dropdown-item" href="#">Beanie</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="size.html">Sizing Chart</a></li>
+          <li class="nav-item"><a class="nav-link active" href="locateus.html">Locate Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+        </ul>
+        <ul class="navbar-nav ml-3">
+          <li class="nav-item"><a id="cart-link" class="nav-link" href="cart6.html">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+          <li class="nav-item"><a class="btn btn-outline-light ml-2" href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="locate-us-hero" class="hero">
+        <div class="container">
+            <h2>Find Our Location</h2>
+            <p>We're looking forward to welcoming you!</p>
+        </div>
+    </section>
+
+    <section id="contact-info">
+        <div class="container">
+            <h3>Our Details</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Address</h4>
+                    <p>COZYO Main Office</p>
+                    <p>Universiti Teknologi MARA (UiTM) Cawangan Kedah, Kampus Sungai Petani, 08400 Merbok, Kedah Darul Aman, Malaysia</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <h4>Phone</h4>
+                    <p><a href="tel:+6047334567">+60 4-7334567</a></p>
+		    <h4>Fax</h4>
+                    <p><a href="fax:+6047337890">+60 4-7337890</a></p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <h4>Email</h4>
+                    <p><a href="mailto:cozyoclothing@gmail.com">cozyoclothing@gmail.com</a></p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <h4>Business Hours</h4>
+                    <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                    <p>Saturday - Sunday: Closed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="map-section">
+        <div class="container">
+            <h3>Our Location on the Map</h3>
+            <div class="map-embed">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3480.1374163670635!2d100.4483869523792!3d5.711115371318152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304b28adfa3c0e53%3A0xe310799cc09dac88!2sUiTM%20Kedah!5e0!3m2!1sen!2smy!4v1750781774713!5m2!1sen!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <p class="map-instructions">
+                    To get your own Google Maps embed code:
+                    <ol>
+                        <li>Go to <a href="https://maps.google.com/" target="_blank">Google Maps</a>.</li>
+                        <li>Search for your business location (e.g., "Bedong, Kedah, Malaysia").</li>
+                        <li>Click on "Share" (the icon that looks like an arrow or three dots).</li>
+                        <li>Select "Embed a map".</li>
+                        <li>Copy the &lt;iframe&gt; code and paste it above, replacing the placeholder.</li>
+                    </ol>
+                </p>
+            </div>
+        </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="cart-items-container">
+            </div>
+          <hr>
+          <div class="text-right font-weight-bold" id="cart-total">Total: $0.00</div>
+        </div>
+        <div class="modal-footer">
+          <button id="checkout-btn" type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#checkoutModal" disabled>Checkout</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="checkoutCloseBtn">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="checkout-form">
+          <div class="modal-body">
+            <h6>Payment Method</h6>
+            <div class="form-check payment-option">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="paymentOnlineBanking" value="Online Banking" required>
+              <label class="form-check-label" for="paymentOnlineBanking">Online Banking</label>
+            </div>
+            <div class="form-check payment-option">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="paymentTouchNGo" value="Touch 'n Go">
+              <label class="form-check-label" for="paymentTouchNGo">Touch 'n Go</label>
+            </div>
+            <div class="form-check payment-option">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="paymentCOD" value="Cash on Delivery">
+              <label class="form-check-label" for="paymentCOD">Cash on Delivery</label>
+            </div>
+
+            <hr>
+            <div class="form-group">
+              <label for="customerName">Full Name</label>
+              <input type="text" class="form-control" id="customerName" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="customerEmail">Email address</label>
+              <input type="email" class="form-control" id="customerEmail" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="customerAddress">Shipping Address</label>
+              <textarea class="form-control" id="customerAddress" rows="2" placeholder="Enter your shipping address" required></textarea>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Place Order</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="checkoutCancelBtn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cart data structure
+    let cart = [];
+
+    // Utility to format price
+    function formatPrice(price) {
+      return '$' + price.toFixed(2);
+    }
+
+    // Update cart count in navbar
+    function updateCartCount() {
+      const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('checkout-btn').disabled = count === 0;
+    }
+
+    // Render cart items in the modal
+    function renderCart() {
+      const container = document.getElementById('cart-items-container');
+      container.innerHTML = '';
+      if (cart.length === 0) {
+        container.innerHTML = '<p>Your cart is empty.</p>';
+        document.getElementById('cart-total').textContent = 'Total: $0.00';
+        return;
+      }
+
+      let total = 0;
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+
+        div.innerHTML = `
+          <div>
+            <div class="cart-item-name">${item.name}</div>
+            <div>Size: ${item.size}</div>
+            <div>Price: ${formatPrice(item.price)}</div>
+            <div>Quantity: ${item.quantity}</div>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-danger remove-btn" data-index="${index}">Remove</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+      document.getElementById('cart-total').textContent = 'Total: ' + formatPrice(total);
+
+      // Add remove listeners
+      const removeButtons = container.querySelectorAll('.remove-btn');
+      removeButtons.forEach(btn => {
+        btn.addEventListener('click', e => {
+          const idx = parseInt(e.target.getAttribute('data-index'));
+          cart.splice(idx, 1);
+          updateCartCount();
+          renderCart();
+        });
+      });
+    }
+
+    // Add to cart button click handler
+    document.querySelectorAll('.cart-button').forEach((button, idx) => {
+      button.addEventListener('click', () => {
+        const gallery = button.closest('.gallery');
+        const productName = gallery.getAttribute('data-name');
+        const productPrice = parseFloat(gallery.getAttribute('data-price'));
+        const sizeSelect = gallery.querySelector('.size-select');
+        const selectedSize = sizeSelect.value;
+
+        if (!selectedSize || selectedSize === 'Select Size') {
+          alert('Please select a size before adding to cart.');
+          return;
+        }
+
+        // Check if item already in cart with same size - increase quantity
+        const existingIndex = cart.findIndex(item => item.name === productName && item.size === selectedSize);
+        if (existingIndex > -1) {
+          cart[existingIndex].quantity++;
+        } else {
+          cart.push({ name: productName, price: productPrice, size: selectedSize, quantity: 1 });
+        }
+
+        updateCartCount();
+        alert(`${productName} (${selectedSize}) added to cart!`);
+      });
+    });
+
+    // Open cart modal - render cart each time
+   
+    // Checkout form submission
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Validate payment method selection
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+      if (!paymentMethod) {
+        alert('Please select a payment method.');
+        return;
+      }
+
+      // Validate other inputs (they are required by HTML5, but double check)
+      const name = document.getElementById('customerName').value.trim();
+      const email = document.getElementById('customerEmail').value.trim();
+      const address = document.getElementById('customerAddress').value.trim();
+
+      if (!name || !email || !address) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      // Here you would normally send the order to the server.
+      // For demo, just show a confirmation message.
+      alert(`Thank you for your order, ${name}!\nPayment Method: ${paymentMethod.value}\nYour order total is ${document.getElementById('cart-total').textContent.split(': ')[1]}`);
+
+      // Clear cart and form
+      cart = [];
+      updateCartCount();
+      renderCart();
+      this.reset();
+
+      // Close checkout modal
+      $('#checkoutModal').modal('hide');
+    });
+
+    // Script from others.html for Locate Us page functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Locate Us page loaded successfully!');
+
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                const nameInput = document.getElementById('name');
+                if (nameInput && nameInput.value.trim() === '') {
+                    alert('Please enter your name.');
+                    event.preventDefault();
+                }
+            });
+        }
+    });
+  </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.cart-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productElement = event.target.closest('.gallery'); // Changed from .gallery-item to .gallery
+                if (productElement) {
+                    const productName = productElement.getAttribute('data-name');
+                    const productPrice = parseFloat(productElement.getAttribute('data-price').replace('RM', ''));
+
+                    // For merchandise, you might not have a size, or it could be 'One Size'
+                    const productSize = 'One Size'; // Default size for caps, or add a select if different sizes are available
+
+                    const item = {
+                        id: Date.now(), // Unique ID for the item
+                        name: productName,
+                        price: productPrice,
+                        quantity: 1,
+                        size: productSize
+                    };
+
+                    let cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+                    // Check if item already exists in cart (same name and size/type)
+                    // If a user can add the *exact same* cap multiple times, you might want to allow that.
+                    // For now, let's assume if it's the exact same product name and size, increment quantity.
+                    const existingItemIndex = cartItems.findIndex(cartItem =>
+                        cartItem.name === item.name && cartItem.size === item.size
+                    );
+
+                    if (existingItemIndex > -1) {
+                        cartItems[existingItemIndex].quantity += 1; // Increment quantity if item exists
+                    } else {
+                        cartItems.push(item); // Add new item if it doesn't exist
+                    }
+
+                    localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
+
+                    // Optional: Provide visual feedback that the item was added
+                    alert(`${productName} added to cart!`);
+
+                    // Optional: If you want to update the cart count in the header immediately
+                    updateCartCountDisplay(); // Call a function to refresh the cart count
+
+                    // No redirection here. User stays on the product page.
+                    // If you want to redirect after adding, uncomment the line below:
+                    // window.location.href = 'cart6.html';
+                }
+            });
+        });
+
+        // Function to update the cart count in the navbar (assuming cart-count span exists)
+        function updateCartCountDisplay() {
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                const cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+                const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+                cartCountElement.textContent = totalItems;
+            }
+        }
+
+        // Call this when the page loads to show the initial cart count
+        updateCartCountDisplay();
+    });
+</script>
+   <footer class="mt-5 pt-4 pb-4">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <p>Stay connected through our social platforms:</p>
+          <a href="https://www.facebook.com" class="text-white d-block"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="https://www.instagram.com/" class="text-white d-block"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://www.tiktok.com/en/" class="text-white d-block"><i class="fab fa-tiktok"></i> TikTok</a>
+          <a href="https://www.youtube.com/" class="text-white d-block"><i class="fab fa-youtube"></i> YouTube</a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Our Mission</h5>
+          <p>At COZYO, we aim to bring you comfort and style with every product. Our passion for cozy fashion drives our commitment to quality and creativity.</p>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <h5>Customer Service</h5>
+          <p>Email: cozyoclothing@gmail.com</p>
+          <p>Phone: +60 4-733 4567</p>
+	  <p>Fax: +60 4-733 7890</p>
+          <p><a href="#">FAQs</a> | <a href="#">Shipping Info</a> | <a href="#">Return Policy</a></p>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        <small>&copy; 2025 COZYO. All rights reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

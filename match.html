@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Categories - Match</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Fauna+One">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+  <!-- FontAwesome CDN for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- AOS (Animate On Scroll) CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Cinzel', 'Fauna+One';
+      margin: 0;
+      background: #f4ebd3;
+    }
+
+   header h1 {
+      font-size: 64px;
+      text-align: center;
+      padding: 30px 0 10px;
+      color: #432820; /* Changed COZYO text color */
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #a8dadc;
+    }
+
+    nav.navbar {
+      background-color: #432820 !important; /* Changed navbar background */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav .nav-link {
+        color: white; 
+	font-weight: bold;
+	font-size: 18px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #432820;
+      margin-top: 40px;
+     font-weight: bold;
+    }
+
+    .gallery-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .responsive {
+      flex: 0 0 20%;
+      box-sizing: border-box;
+    }
+
+    @media only screen and (max-width: 700px) {
+      .responsive {
+        flex: 0 0 90%;
+      }
+    }
+
+    div.gallery {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    div.gallery:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      border-color: #0077b6;
+    }
+
+    div.gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 100%; /* square */
+      overflow: hidden;
+    }
+
+    .image-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.5s ease;
+    }
+
+    .image-wrapper img:last-child {
+      opacity: 0;
+    }
+
+    .gallery:hover .image-wrapper img:last-child {
+      opacity: 1;
+    }
+
+    .gallery:hover .image-wrapper img:first-child {
+      opacity: 0;
+    }
+
+    div.desc {
+      padding: 15px;
+      text-align: center;
+      background-color: #f1f1f1;
+      font-weight: 500;
+      color: #333;
+    }
+.cart-button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #03045e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .cart-button:hover {
+      background-color: #0077b6;
+    }
+
+    .size-select {
+      margin-top: 10px;
+      width: 100px;
+      padding: 4px 6px;
+      font-size: 12px;
+    }
+
+    /* Modal custom styles */
+    .modal-header {
+      background-color: #03045e;
+      color: white;
+    }
+    .modal-footer button {
+      background-color: #03045e;
+      color: white;
+      border: none;
+    }
+    .modal-footer button:hover {
+      background-color: #0077b6;
+    }
+
+    /* Cart item style */
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+    }
+    .cart-item-name {
+      font-weight: 600;
+      color: #03045e;
+      flex: 1 1 60%;
+    }
+    .cart-item-details {
+      flex: 1 1 40%;
+      text-align: right;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Footer Styles (Copied from index.html) */
+    footer {
+      background-color: #432820; /* Dark grey */
+      color: white;
+    }
+
+    footer a {
+      color: #adb5bd; /* Light grey for links */
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer i {
+      margin-right: 8px;
+    }
+
+    /* Custom message display for alerts (Copied from index.html) */
+    .app-message {
+        position: fixed;
+        top: 70px; /* Below the navbar */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1050; /* Above modals */
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        display: none; /* Hidden by default */
+        color: #fff;
+        text-align: center;
+        min-width: 250px;
+    }
+
+    .app-message.success {
+        background-color: #28a745; /* Green */
+    }
+
+    .app-message.warning {
+        background-color: #ffc107; /* Yellow */
+        color: #333;
+    }
+
+    .app-message.error {
+        background-color: #dc3545; /* Red */
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>COZYO</h1>
+  </header>
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#mainNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="mainNavbar">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="story.html">Stories</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Categories</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="men.html">Men</a>
+              <a class="dropdown-item" href="women.html">Women</a>
+              <a class="dropdown-item" href="match.html">Match</a>
+              <a class="dropdown-item" href="kids.html">Kids</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Merchandise</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="tote.html">Totebag</a>
+              <a class="dropdown-item" href="lyd.html">Lanyard</a>
+              <a class="dropdown-item" href="tb.html">Tumbler</a>
+              <a class="dropdown-item" href="bh.html">Bucket Hat</a>
+              <a class="dropdown-item" href="cap.html">Cap</a>
+              <a class="dropdown-item" href="bean.html">Beanie</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="size.html">Sizing Chart</a></li>
+          <li class="nav-item"><a class="nav-link" href="locateus.html">Locate Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+        </ul>
+        <ul class="navbar-nav ml-3">
+          <li class="nav-item">
+  <a id="cart-link" class="nav-link" href="cart6.html"
+    >🛒 Cart (<span id="cart-count">0</span>)</a
+  >
+	  </li>
+          <li class="nav-item"><a class="btn btn-outline-light ml-2" href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <h2>MATCHING COLLECTIONS</h2>
+
+  <div class="gallery-container">
+    <!-- Frame 1: Matching Couple 1 -->
+    <div class="responsive" data-aos="zoom-in" data-aos-delay="100">
+      <div class="gallery" data-name="Rose Fade Duo" data-price="100.00">
+        <div class="image-wrapper">
+          <img src="images/mat1.jpg" alt="Matching Couple 1" />
+          <img src="images/mat1b.jpg" alt="Matching Couple 1 Hover" />
+        </div>
+        <div class="desc">
+          Rose Fade Duo <br />
+          RM100.00 <br />
+          <select class="gender-select" data-gender-type="men">
+            <option selected disabled>Select Men's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+          </select><br />
+          <select class="gender-select" data-gender-type="women">
+            <option selected disabled>Select Women's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+ 	    <option>8XL</option>
+          </select><br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 2: Matching Couple 2 -->
+    <div class="responsive" data-aos="zoom-in" data-aos-delay="200">
+      <div class="gallery" data-name="Maroon Pulse Duo" data-price="95.00">
+        <div class="image-wrapper">
+          <img src="images/mat2.jpg" alt="Matching Couple 2" />
+          <img src="images/mat2b.jpg" alt="Matching Couple 2 Hover" />
+        </div>
+        <div class="desc">
+          Maroon Pulse Duo <br />
+          RM95.00 <br />
+          <select class="gender-select" data-gender-type="men">
+            <option selected disabled>Select Men's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+          </select><br />
+          <select class="gender-select" data-gender-type="women">
+            <option selected disabled>Select Women's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+	    <option>8XL</option>
+          </select><br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 3: Matching Couple 3 -->
+    <div class="responsive" data-aos="zoom-in" data-aos-delay="300">
+      <div class="gallery" data-name="Ruby Motion Duo" data-price="95.00">
+        <div class="image-wrapper">
+          <img src="images/mat3.jpg" alt="Matching Couple 3" />
+          <img src="images/mat3b.jpg" alt="Matching Couple 3 Hover" />
+        </div>
+        <div class="desc">
+          Ruby Motion Duo <br />
+          RM95.00 <br />
+          <select class="gender-select" data-gender-type="men">
+            <option selected disabled>Select Men's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+          </select><br />
+          <select class="gender-select" data-gender-type="women">
+            <option selected disabled>Select Women's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+	    <option>8XL</option>
+          </select><br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 4: Matching Couple 4 -->
+    <div class="responsive" data-aos="zoom-in" data-aos-delay="400">
+      <div class="gallery" data-name="Shadow Orbit Duo" data-price="95.00">
+        <div class="image-wrapper">
+          <img src="images/mat4.jpg" alt="Matching Couple 4" />
+          <img src="images/mat4b.jpg" alt="Matching Couple 4 Hover" />
+        </div>
+        <div class="desc">
+          Shadow Orbit Duo <br />
+          RM95.00 <br />
+          <select class="gender-select" data-gender-type="men">
+            <option selected disabled>Select Men's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+          </select><br />
+          <select class="gender-select" data-gender-type="women">
+            <option selected disabled>Select Women's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+	    <option>8XL</option>
+          </select><br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frame 5: Matching Couple 5 -->
+    <div class="responsive" data-aos="zoom-in" data-aos-delay="500">
+      <div class="gallery" data-name="Galcier Strike Duo" data-price="100.00">
+        <div class="image-wrapper">
+          <img src="images/mat5.jpg" alt="Matching Couple 5" />
+          <img src="images/mat5b.jpg" alt="Matching Couple 5 Hover" />
+        </div>
+        <div class="desc">
+          Glacier Strike Duo <br />
+          RM100.00 <br />
+          <select class="gender-select" data-gender-type="men">
+            <option selected disabled>Select Men's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+          </select><br />
+          <select class="gender-select" data-gender-type="women">
+            <option selected disabled>Select Women's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+	    <option>8XL</option>
+          </select><br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Frame 6 -->
+    <div class="responsive" data-aos="zoom-in" data-aos-delay="600">
+      <div class="gallery" data-name="Olive Valor Duo" data-price="95.00">
+        <div class="image-wrapper">
+          <img src="images/mat6.jpg" alt="Matching Couple 6" />
+          <img src="images/mat6b.jpg" alt="Matching Couple 6 Hover" />
+        </div>
+        <div class="desc">
+          Olive Valor Duo <br />
+          RM95.00 <br />
+          <select class="gender-select" data-gender-type="men">
+            <option selected disabled>Select Men's Size</option>
+             <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+          </select><br />
+          <select class="gender-select" data-gender-type="women">
+            <option selected disabled>Select Women's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+	    <option>8XL</option>
+          </select><br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Frame 7 -->
+    <div class="responsive" data-aos="zoom-in" data-aos-delay="700">
+      <div class="gallery" data-name="Forest Tech Duo" data-price="100.00">
+        <div class="image-wrapper">
+          <img src="images/mat7.jpg" alt="Matching Couple 7" />
+          <img src="images/mat7b.jpg" alt="Matching Couple 7 Hover" />
+        </div>
+        <div class="desc">
+          Forest Tech Duo <br />
+          RM100.00 <br />
+          <select class="gender-select" data-gender-type="men">
+            <option selected disabled>Select Men's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+          </select><br />
+          <select class="gender-select" data-gender-type="women">
+            <option selected disabled>Select Women's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+	    <option>8XL</option>
+          </select><br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Frame 8 -->
+    <div class="responsive" data-aos="zoom-in" data-aos-delay="800">
+      <div class="gallery" data-name="Sunset Flame Duo" data-price="100.00">
+        <div class="image-wrapper">
+          <img src="images/mat8.jpg" alt="Matching Couple 8" />
+          <img src="images/mat8b.jpg" alt="Matching Couple 8 Hover" />
+        </div>
+        <div class="desc">
+          Sunset Flame Duo <br />
+          RM100.00 <br />
+          <select class="gender-select" data-gender-type="men">
+            <option selected disabled>Select Men's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+          </select><br />
+          <select class="gender-select" data-gender-type="women">
+            <option selected disabled>Select Women's Size</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+	    <option>2XL</option>
+	    <option>3XL</option>
+            <option>4XL</option>
+            <option>5XL</option>
+            <option>6XL</option>
+            <option>7XL</option>
+	    <option>8XL</option>
+          </select><br />
+          <button class="cart-button">Add to Cart +</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom App Message Display (Copied from index.html) -->
+  <div id="app-message" class="app-message"></div>
+
+    <!-- Checkout Modal (Copied from index.html) -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+                  <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="checkoutCloseBtn">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <form id="checkout-form">
+                  <div class="modal-body">
+                      <h6>Payment Method</h6>
+                      <div class="form-check payment-option">
+                          <input class="form-check-input" type="radio" name="paymentMethod" id="paymentOnlineBanking" value="Online Banking" required>
+                          <label class="form-check-label" for="paymentOnlineBanking">Online Banking</label>
+                      </div>
+                      <div class="form-check payment-option">
+                          <input class="form-check-input" type="radio" name="paymentMethod" id="paymentTouchNGo" value="Touch 'n Go">
+                          <label class="form-check-label" for="paymentTouchNGo">Touch 'n Go</label>
+                      </div>
+                      <div class="form-check payment-option">
+                          <input class="form-check-input" type="radio" name="paymentMethod" id="paymentCOD" value="Cash on Delivery">
+                          <label class="form-check-label" for="paymentCOD">Cash on Delivery</label>
+                      </div>
+
+                      <hr>
+                      <div class="form-group">
+                          <label for="customerName">Full Name</label>
+                          <input type="text" class="form-control" id="customerName" placeholder="Enter your full name" required>
+                      </div>
+
+                      <div class="form-group">
+                          <label for="customerEmail">Email address</label>
+                          <input type="email" class="form-control" id="customerEmail" placeholder="Enter your email" required>
+                      </div>
+
+                      <div class="form-group">
+                          <label for="customerAddress">Shipping Address</label>
+                          <textarea class="form-control" id="customerAddress" rows="2" placeholder="Enter your shipping address" required></textarea>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Place Order</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" id="checkoutCancelBtn">Cancel</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+  <!-- Footer (Copied from index.html) -->
+  <footer class="mt-5 pt-4 pb-4">
+      <div class="container">
+          <div class="row">
+
+              <!-- Follow Us Section -->
+              <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                  <h5>Follow Us</h5>
+                  <p>Stay connected through our social platforms:</p>
+          <a href="https://www.facebook.com" class="text-white d-block"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="https://www.instagram.com/" class="text-white d-block"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://www.tiktok.com/en/" class="text-white d-block"><i class="fab fa-tiktok"></i> TikTok</a>
+          <a href="https://www.youtube.com/" class="text-white d-block"><i class="fab fa-youtube"></i> YouTube</a>
+
+              </div>
+
+              <!-- Our Mission Section -->
+              <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                  <h5>Our Mission</h5>
+                  <p>At COZYO, we aim to bring you comfort and style with every product. Our passion for cozy fashion drives our commitment to quality and creativity.</p>
+              </div>
+
+              <!-- Customer Service Section -->
+              <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                  <h5>Customer Service</h5>
+                  <p>Email: cozyoclothing@gmail.com</p>
+                  <p>Phone: +60 4-733 4567</p>
+                  <p>Fax: +60 4-733 7890</p>
+                  <p><a href="#">FAQs</a> | <a href="#">Shipping Info</a> | <a href="#">Return Policy</a></p>
+              </div>
+          </div>
+
+          <!-- Copyright Information -->
+          <div class="text-center mt-3" data-aos="fade-up" data-aos-delay="400">
+              <small>&copy; 2025 COZYO. All rights reserved.</small>
+          </div>
+      </div>
+  </footer>
+
+  <!-- JavaScript Includes (jQuery, Popper, Bootstrap) -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS (Animate On Scroll) JS - Added for animations -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    // Global variable for captcha (if you plan to add a contact form here)
+    let currentCaptchaText = '';
+
+    // Function to generate a random captcha (if you plan to add a contact form here)
+    function generateCaptcha() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let captcha = '';
+        for (let i = 0; i < 5; i++) { // 5 characters in captcha
+            captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        currentCaptchaText = captcha.split('').join(' '); // Add spaces for display
+        // document.getElementById('captcha-display').textContent = currentCaptchaText; // Uncomment if you add captcha to men.html
+    }
+
+    // Function to display custom messages (replaces alert)
+    function showMessage(message, type = 'success') {
+        const appMessage = document.getElementById('app-message');
+        appMessage.textContent = message;
+        appMessage.className = `app-message ${type}`; // Add type class for styling
+        appMessage.style.display = 'block';
+
+        // Hide message after 3 seconds
+        setTimeout(() => {
+            appMessage.style.display = 'none';
+        }, 3000);
+    }
+
+    // Cart data structure
+    let cart = [];
+
+    // Utility to format price
+    function formatPrice(price) {
+      return '$' + price.toFixed(2);
+    }
+
+    // Update cart count in navbar
+    function updateCartCount() {
+      const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('checkout-btn').disabled = count === 0;
+    }
+
+    // Render cart items in the modal
+    function renderCart() {
+      const container = document.getElementById('cart-items');
+      container.innerHTML = '';
+      if (cart.length === 0) {
+        container.innerHTML = '<p>Your cart is empty.</p>';
+        document.getElementById('cart-total').textContent = 'Total: $0.00';
+        return;
+      }
+
+      let total = 0;
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+
+        div.innerHTML = `
+          <div class="cart-item-name">${item.name} (${item.size})</div>
+          <div class="cart-item-details">
+            ${formatPrice(item.price)} x ${item.quantity} = ${formatPrice(itemTotal)}
+            <button class="btn btn-danger btn-sm remove-item" data-index="${index}">Remove</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+
+      document.getElementById('cart-total').textContent = 'Total: ' + formatPrice(total);
+
+      // Add remove listeners
+      document.querySelectorAll('.remove-item').forEach((button) => {
+        button.addEventListener('click', function () {
+          const index = parseInt(this.dataset.index);
+          cart.splice(index, 1);
+          updateCartCount();
+          renderCart();
+        });
+      });
+    }
+
+    // Add to cart button click handler
+    document.querySelectorAll('.cart-button').forEach((button) => {
+      button.addEventListener('click', function () {
+        const gallery = this.closest('.gallery');
+        const productName = gallery.dataset.name;
+        const productPrice = parseFloat(gallery.dataset.price);
+        
+        // For match.html, get both men's and women's sizes
+        const menSizeSelect = gallery.querySelector('.gender-select[data-gender-type="men"]');
+        const womenSizeSelect = gallery.querySelector('.gender-select[data-gender-type="women"]');
+        
+        const selectedMenSize = menSizeSelect ? menSizeSelect.value : 'N/A';
+        const selectedWomenSize = womenSizeSelect ? womenSizeSelect.value : 'N/A';
+
+        if ((menSizeSelect && selectedMenSize === 'Select Men\'s Size') || (womenSizeSelect && selectedWomenSize === 'Select Women\'s Size')) {
+          showMessage('Please select both men\'s and women\'s sizes before adding to cart.', 'warning');
+          return;
+        }
+
+        const combinedSize = `Men: ${selectedMenSize}, Women: ${selectedWomenSize}`;
+
+        const existingItemIndex = cart.findIndex(
+          (item) => item.name === productName && item.size === combinedSize
+        );
+
+        if (existingItemIndex > -1) {
+          cart[existingItemIndex].quantity++;
+        } else {
+          cart.push({
+            name: productName,
+            price: productPrice,
+            size: combinedSize,
+            quantity: 1,
+          });
+        }
+        updateCartCount();
+        showMessage(`${productName} (${combinedSize}) added to cart!`, 'success');
+      });
+    });
+
+    // Handle payment method selection in cart modal
+    document.addEventListener('DOMContentLoaded', function () {
+      const paymentOnlineRadio = document.getElementById('payment-online');
+      const onlineBankingDetails = document.getElementById('online-banking-details');
+
+      if (paymentOnlineRadio) {
+        paymentOnlineRadio.addEventListener('change', function () {
+          if (this.checked) {
+            onlineBankingDetails.style.display = 'block';
+            onlineBankingDetails.querySelectorAll('input').forEach(input => input.setAttribute('required', 'required'));
+          } else {
+            onlineBankingDetails.style.display = 'none';
+            onlineBankingDetails.querySelectorAll('input').forEach(input => input.removeAttribute('required'));
+          }
+        });
+      }
+
+      // Add validation for the order form in the cart modal
+      const orderForm = document.getElementById('order-form');
+      if (orderForm) {
+        orderForm.addEventListener('submit', function (event) {
+          if (!orderForm.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+            showMessage('Please fill in all required fields and select a payment method.', 'warning');
+          } else {
+            event.preventDefault();
+            // Process order (e.g., send data to server)
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            showMessage(`Order placed successfully! Payment via ${paymentMethod}.`, 'success');
+            
+            // Clear cart, update count, and close modal
+            cart = [];
+            updateCartCount();
+            renderCart();
+            $('#cartModal').modal('hide');
+            orderForm.reset();
+            onlineBankingDetails.style.display = 'none'; // Hide banking details after reset
+            onlineBankingDetails.querySelectorAll('input').forEach(input => input.removeAttribute('required')); // Remove required
+          }
+          orderForm.classList.add('was-validated'); // Show validation feedback
+        }, false);
+      }
+    });
+
+
+    // Open cart modal - render cart each time
+    document.getElementById('cart-link').addEventListener('click', () => {
+      renderCart();
+    });
+
+    // Checkout form submission (for the separate checkoutModal copied from index.html)
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const paymentMethod = document.querySelector('#checkoutModal input[name="paymentMethod"]:checked');
+        if (!paymentMethod) {
+            showMessage('Please select a payment method.', 'warning');
+            return;
+        }
+
+        const name = document.getElementById('customerName').value.trim();
+        const email = document.getElementById('customerEmail').value.trim();
+        const address = document.getElementById('customerAddress').value.trim();
+
+        if (!name || !email || !address) {
+            showMessage('Please fill in all required fields.', 'warning');
+            return;
+        }
+
+        showMessage(`Thank you for your order, ${name}!\nPayment Method: ${paymentMethod.value}\nYour order total is ${document.getElementById('cart-total').textContent.split(': ')[1]}`, 'success');
+
+        cart = [];
+        updateCartCount();
+        renderCart();
+        this.reset();
+
+        $('#checkoutModal').modal('hide');
+    });
+
+    // Initialize AOS when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        AOS.init({
+            duration: 800, // animation duration
+            once: true,    // whether animation should happen only once - while scrolling down
+        });
+        // generateCaptcha(); // Uncomment if a captcha is added to men.html
+    });
+  </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.cart-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productElement = event.target.closest('.gallery-item');
+                if (productElement) {
+                    const productName = productElement.querySelector('.desc h4').textContent.trim();
+                    const productPriceText = productElement.querySelector('.desc p').textContent.trim();
+                    const productPrice = parseFloat(productPriceText.replace('RM ', ''));
+
+                    // For simplicity, assigning a default size.
+                    // If you have size selection, you'll need to get the selected size here.
+                    const productSize = 'M'; // Default size
+
+                    const item = {
+                        id: Date.now(), // Unique ID for the item
+                        name: productName,
+                        price: productPrice,
+                        quantity: 1,
+                        size: productSize
+                    };
+
+                    let cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+                    // Check if item already exists in cart (same name and size)
+                    const existingItem = cartItems.find(cartItem => cartItem.name === item.name && cartItem.size === item.size);
+
+                    if (existingItem) {
+                        existingItem.quantity += 1; // Increment quantity if item exists
+                    } else {
+                        cartItems.push(item); // Add new item if it doesn't exist
+                    }
+
+                    localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
+
+                    // Redirect to the new cart page
+                    window.location.href = 'cart6.html';
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.cart-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productElement = event.target.closest('.gallery'); // Changed from .gallery-item to .gallery
+                if (productElement) {
+                    const productName = productElement.getAttribute('data-name');
+                    const productPrice = parseFloat(productElement.getAttribute('data-price').replace('RM', ''));
+
+                    // For merchandise, you might not have a size, or it could be 'One Size'
+                    const productSize = 'One Size'; // Default size for caps, or add a select if different sizes are available
+
+                    const item = {
+                        id: Date.now(), // Unique ID for the item
+                        name: productName,
+                        price: productPrice,
+                        quantity: 1,
+                        size: productSize
+                    };
+
+                    let cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+                    // Check if item already exists in cart (same name and size/type)
+                    // If a user can add the *exact same* cap multiple times, you might want to allow that.
+                    // For now, let's assume if it's the exact same product name and size, increment quantity.
+                    const existingItemIndex = cartItems.findIndex(cartItem =>
+                        cartItem.name === item.name && cartItem.size === item.size
+                    );
+
+                    if (existingItemIndex > -1) {
+                        cartItems[existingItemIndex].quantity += 1; // Increment quantity if item exists
+                    } else {
+                        cartItems.push(item); // Add new item if it doesn't exist
+                    }
+
+                    localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
+
+                    // Optional: Provide visual feedback that the item was added
+                    alert(`${productName} added to cart!`);
+
+                    // Optional: If you want to update the cart count in the header immediately
+                    updateCartCountDisplay(); // Call a function to refresh the cart count
+
+                    // No redirection here. User stays on the product page.
+                    // If you want to redirect after adding, uncomment the line below:
+                    // window.location.href = 'cart6.html';
+                }
+            });
+        });
+
+        // Function to update the cart count in the navbar (assuming cart-count span exists)
+        function updateCartCountDisplay() {
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                const cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+                const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+                cartCountElement.textContent = totalItems;
+            }
+        }
+
+        // Call this when the page loads to show the initial cart count
+        updateCartCountDisplay();
+    });
+</script>
+</body>
+</html>
